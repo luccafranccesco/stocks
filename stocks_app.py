@@ -16,8 +16,8 @@ data = load_data()
 
 # Sidebar for user input
 st.sidebar.header("Select Company")
-selected_company = st.sidebar.selectbox("Select a company", data["Company"])
-ticker = data[data["Company"] == selected_company]["Ticker"].values[0]
+selected_company = st.sidebar.selectbox("Select a company", data["Name"])
+ticker = data[data["Name"] == selected_company]["Ticker"].values[0]
 
 # User-friendly date range selection
 st.sidebar.header("Date Range")
@@ -39,8 +39,8 @@ st.plotly_chart(volume_fig, use_container_width=True)
 
 # Comparative Analysis
 st.header("Comparative Analysis")
-selected_companies = st.multiselect("Select companies to compare", data["Company"])
-selected_tickers = data[data["Company"].isin(selected_companies)]["Ticker"].tolist()
+selected_companies = st.multiselect("Select companies to compare", data["Name"])
+selected_tickers = data[data["Name"].isin(selected_companies)]["Ticker"].tolist()
 comparison_data = yf.download(selected_tickers, start=start_date, end=end_date)["Close"]
 comparison_fig = px.line(comparison_data, title="Comparative Stock Prices")
 st.plotly_chart(comparison_fig, use_container_width=True)
